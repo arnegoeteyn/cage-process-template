@@ -24,10 +24,8 @@ def event_processor(evt: dict):
 
     # dispatch events according to their type
     evt_type =evt.get("type", "")
-    if(evt_type == "QUOTE"):
-        # use the QUOTE event processor dedicated function
-        logger.info(f"use the update quote event processor")
-        update_quote_event_processor(evt)
+    if(evt_type.startswith("TEST_")):
+        audit_log("received a test event", evt=evt_type.removeprefix("TEST_"))
     else:
         # use the GENERIC event processor function, that basicaly does nothing
         logger.info(f"Unhandled message type, use the generic event processor")
