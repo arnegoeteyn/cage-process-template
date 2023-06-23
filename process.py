@@ -1,4 +1,5 @@
 import logging
+import random
 import time
 import requests
 import os
@@ -26,6 +27,8 @@ def event_processor(evt: dict):
     evt_type =evt.get("type", "")
     if(evt_type.startswith("TEST_")):
         audit_log("received a test event", evt=evt_type.removeprefix("TEST_"))
+        if(random.choice([True, False])):
+            raise ValueError('This randomly failed')
     else:
         # use the GENERIC event processor function, that basicaly does nothing
         logger.info(f"Unhandled message type, use the generic event processor")
