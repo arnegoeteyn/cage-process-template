@@ -28,37 +28,44 @@ def event_processor(evt: dict):
     evt_type =evt.get("type", "")
     if(evt_type.startswith("TEST_")):
         audit_log("received a test event", evt=evt_type.removeprefix("TEST_"))
-        logger.info("stop")
-        event_catalonia_crashes()
-        logger.info("start")
+        logger.info("start_crash")
+        crash_event_processor(evt)
+        logger.info("stop_crash")
 
         # if(random.choice([True, False])):
         #     raise ValueError('This randomly failed')
 
-def event_catalonia_crashes():
-   logger.info("start")
+def crash_event_processor(evt: dict):
+   try:
+      logger.info("start")
 
-   path = "/resources/data/configuration.json"
-   # path = "configuration.json"
-   f = open(path)
-   data = json.load(f)
-   f.close()
-   print(data)
-   url = data['connectorKeys']['SHARING_URL']
+      path = "/resources/data/configuration.json"
+      # path = "configuration.json"
+      f = open(path)
+      data = json.load(f)
+      f.close()
+      print(data)
+      url = data['connectorKeys']['SHARING_URL']
 
-   # filelocation="output.csv"
-   filelocation="/resources/outputs/output.csv"
-   
-   logger.info("start")
-   logger.info(url)
+      # filelocation="output.csv"
+      filelocation="/resources/outputs/output.csv"
+      
+      logger.info("start")
+      logger.info(url)
 
-   crash = urllib.request.urlopen(url);
-   content = crash.read().decode('utf-8')
+      crash = urllib.request.urlopen(url);
+      content = crash.read().decode('utf-8')
 
-   with open(filelocation, 'w', newline='') as file:
-      for line in content:
-         file.write(line)
+      with open(filelocation, 'w', newline='') as file:
+         for line in content:
+            file.write(line)
+
+   except Exception as err:
+        logger.error(f"Failed processing event: {err}")
+        traceback.print_exc()
+    finally:
+        logger.info(f"Processed event in {time.time() - start:.{3}f}s")
 
 
 if __name__ == "__main__":
-   event_catalonia_crashes()
+   crash_event_processor()
