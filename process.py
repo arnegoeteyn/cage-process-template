@@ -27,6 +27,7 @@ def event_processor(evt: dict):
     evt_type =evt.get("type", "")
     if(evt_type.startswith("TEST_")):
         audit_log("received a test event", evt=evt_type.removeprefix("TEST_"))
+
         event_catalonia_crashes()
         # if(random.choice([True, False])):
         #     raise ValueError('This randomly failed')
@@ -39,9 +40,12 @@ def event_catalonia_crashes():
 
    filelocation="/resources/outputs/output.csv"
    
+   logger.info("start")
    crash = urllib.request.urlopen(url);
+
    with open(filelocation, 'w', newline='') as file:
       for line in crash:
+         logger.info(line)
          file.write(line)
 
    f.close()
