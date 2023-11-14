@@ -61,10 +61,10 @@ def crash_event_processor(evt: dict):
             file.write(line)
 
    except Exception as err:
-        logger.error(f"Failed processing event: {err}")
-        traceback.print_exc()
-    finally:
-        logger.info(f"Processed event in {time.time() - start:.{3}f}s")
+      logger.error(f"Failed processing event: {err}")
+      traceback.print_exc()
+   finally:
+      logger.info(f"Processed event in {time.time() - start:.{3}f}s")
 
 
 if __name__ == "__main__":
