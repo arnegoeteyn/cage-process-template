@@ -35,7 +35,7 @@ def event_catalonia_crashes():
    path = "/resources/configuration.json"
    f = open(path)
    data = json.load(f)
-   url = data['connectionkeys']['sharing_url']
+   url = data['connectionkeys']['SHARING_URL']
 
    filelocation="./output.csv"
    
