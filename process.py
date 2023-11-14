@@ -62,10 +62,8 @@ def crash_event_processor(evt: dict):
 
    except Exception as err:
       logger.error(f"Failed processing event: {err}")
-      traceback.print_exc()
-   finally:
-      logger.info(f"Processed event in {time.time() - start:.{3}f}s")
+      logger.error(err)
 
 
 if __name__ == "__main__":
-   crash_event_processor()
+   crash_event_processor({"type": "TEST_CRASH"})
