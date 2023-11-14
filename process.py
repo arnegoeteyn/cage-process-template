@@ -27,12 +27,16 @@ def event_processor(evt: dict):
     evt_type =evt.get("type", "")
     if(evt_type.startswith("TEST_")):
         audit_log("received a test event", evt=evt_type.removeprefix("TEST_"))
-
+        logger.info("stop")
         event_catalonia_crashes()
+        logger.info("start")
+
         # if(random.choice([True, False])):
         #     raise ValueError('This randomly failed')
 
 def event_catalonia_crashes():
+   logger.info("start")
+
    path = "/resources/configuration.json"
    f = open(path)
    data = json.load(f)
