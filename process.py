@@ -37,7 +37,7 @@ def event_catalonia_crashes():
    data = json.load(f)
    url = data['connectionkeys']['SHARING_URL']
 
-   filelocation="./output.csv"
+   filelocation="/resources/outputs/output.csv"
    
    crash = urllib.request.urlopen(url);
    with open(filelocation, 'w', newline='') as file:
