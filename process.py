@@ -3,7 +3,8 @@ import random
 import time
 import requests
 import os
-import pandas as pd
+import json
+import urllib.request
 from dv_utils import default_settings, Client, audit_log 
 
 logger = logging.getLogger(__name__)
@@ -37,20 +38,27 @@ def event_processor(evt: dict):
 def event_catalonia_crashes():
    logger.info("start")
 
-   path = "/resources/configuration.json"
+   path = "/resources/data/configuration.json"
+   # path = "configuration.json"
    f = open(path)
    data = json.load(f)
-   url = data['connectionkeys']['SHARING_URL']
+   f.close()
+   print(data)
+   url = data['connectorKeys']['SHARING_URL']
 
+   # filelocation="output.csv"
    filelocation="/resources/outputs/output.csv"
    
    logger.info("start")
    logger.info(url)
+
    crash = urllib.request.urlopen(url);
+   content = crash.read().decode('utf-8')
 
    with open(filelocation, 'w', newline='') as file:
-      for line in crash:
-         logger.info(line)
+      for line in content:
          file.write(line)
 
-   f.close()
+
+if __name__ == "__main__":
+   event_catalonia_crashes()
