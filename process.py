@@ -41,6 +41,7 @@ def event_catalonia_crashes():
    filelocation="/resources/outputs/output.csv"
    
    logger.info("start")
+   logger.info(url)
    crash = urllib.request.urlopen(url);
 
    with open(filelocation, 'w', newline='') as file:
