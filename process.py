@@ -28,13 +28,18 @@ def event_processor(evt: dict):
     evt_type = evt.get("type", "")
 
     if (evt_type == "LOAD_FILE"):
+        logger.info(f"downloading {evt}")
         audit_log("downloading file", evt=evt_type)
         descriptor = "654b9ef2a60a59095511524e"
 
         config = simple_file.SimpleFileConfiguration()
         populate_configuration(descriptor, config)
 
-    if (evt_type.startswith("TEST_")):
+        connector = simple_file.SimpleFileConnector(config)
+
+        connector.get()
+
+    elif (evt_type.startswith("TEST_")):
         audit_log("received a test event", evt=evt_type.removeprefix("TEST_"))
         logger.info("start_crash")
         crash_event_processor(evt)
