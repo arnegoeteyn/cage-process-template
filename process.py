@@ -33,7 +33,6 @@ def event_processor(evt: dict):
         descriptor = "654b9ef2a60a59095511524e"
 
         config = simple_file.SimpleFileConfiguration()
-        config.download_dir = "."
         populate_configuration(descriptor, config)
 
         connector = simple_file.SimpleFileConnector(config)
